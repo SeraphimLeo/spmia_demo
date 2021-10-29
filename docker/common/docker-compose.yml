@@ -1,0 +1,31 @@
+version: '2'
+services:
+  eurekaserver:
+    image: "johncarnell/tmx-eurekasvr:chapter8"
+    ports:
+      - "8761:8761"
+  zuulserver:
+    image: "johncarnell/tmx-zuulsvr:chapter8"
+    ports:
+      - "5555:5555"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "5555"
+      CONFIGSERVER_URI: "http://configserver:8888"
+      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      DATABASESERVER_PORT: "5432"
+      EUREKASERVER_PORT: "8761"
+      CONFIGSERVER_PORT: "8888"
+  configserver:
+    image: "liuluchuan/tmx-confsvr:chapter8"
+    ports:
+      - "8888:8888"
+    environment:
+      EUREKASERVER_URI: 'http://eurekaserver:8761/eureka'
+      EUREKASERVER_PORT: "8761"
+      ENCRYPT_KEY: "IMSYMMETRIC"
+  kafkaserver:
+    image: spotify/kafka
+    ports:
+      - 2181:2181
+      - 9092:9092

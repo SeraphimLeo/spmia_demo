@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: organizationservice
+  profiles:
+    active: default
+  cloud:
+    config:
+      profile: default
+      enabled: true
+      uri: http://localhost:8888/
+  zipkin:
+    baseUrl: http://localhost:9411
+lala:
+  test: estests
+

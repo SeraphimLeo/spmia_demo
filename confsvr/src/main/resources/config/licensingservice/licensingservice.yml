@@ -1,0 +1,41 @@
+spring:
+  jpa:
+    database: "POSTGRESQL"
+    show-sql: "true"
+    properties.hibernate.dialect: "org.hibernate.dialect.PostgreSQLDialect"
+  datasource:
+    platform: "postgres"
+    url: "jdbc:postgresql://database:5432/eagle_eye_local"
+    username: "postgres"
+    password: "p0stgr@s"
+    testWhileIdle: "true"
+    validationQuery: "SELECT 1"
+  database.driverClassName: "org.postgresql.Driver"
+  zipkin:
+    baseUrl: http://localhost:9411
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: orgChangeTopic
+          content-type: application/json
+          group: licensingGroup
+      kafka:
+        binder:
+          #          zkNodes: localhost
+          brokers: localhost:9092
+
+logging:
+  level:
+    com:
+      thoughtmechanix: debug
+server:
+  port: 8081
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
